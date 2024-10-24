@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Radio</title>
+</head>
+<body>
+    <h1>Quantum Radio</h1>
+    <audio id="audio-player" controls autoplay></audio>
+
+    <script>
+        const songsFolder = 'Songs/';
+        const adsFolder = 'Ads/';
+
+        // Generating songs from song1.mp3 to song262.mp3
+        const songs = [];
+        for (let i = 1; i <= 262; i++) {
+            songs.push(`song${i}.mp3`);
+        }
+
+        const ads = [];
+        for (let i = 1; i <= 125; i++) {
+            ads.push(`ad${i}.mp3`);
+        }
+
+
+        let currentSongCount = 0;
+
+        function getRandomSong(array) {
+            const randomIndex = Math.floor(Math.random() * array.length);
+            return array[randomIndex];
+        }
+
+        function playNext() {
+            let audioPlayer = document.getElementById('audio-player');
+
+            if (currentSongCount < 2) {
+                // Play a song
+                audioPlayer.src = songsFolder + getRandomSong(songs);
+                currentSongCount++;
+            } else {
+                // Play an ad
+                audioPlayer.src = adsFolder + getRandomSong(ads);
+                currentSongCount = 0; // Reset counter after playing an ad
+            }
+
+            audioPlayer.play();
+        }
+
+        // Event listener for when audio ends
+        document.getElementById('audio-player').addEventListener('ended', playNext);
+
+        // Start playing the first song
+        playNext();
+    </script>
+</body>
+</html>
